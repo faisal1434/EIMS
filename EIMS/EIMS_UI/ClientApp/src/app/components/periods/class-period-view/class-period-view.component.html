@@ -1,0 +1,32 @@
+<div class="wrapper">
+  <h2 class="mat-title" style="width:100%">Class Periods</h2>
+  <mat-card *ngFor="let s of activeShifts" class="period-card">
+    <mat-card-header>
+      <mat-card-title>
+        {{getShitName(s.shiftType)}}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="period-card-content">
+     <div class="generate-bar">
+       <button title="Regenerate" mat-mini-fab style="position:relative;right:20px" (click)="regenerate(s)"><mat-icon>autorenew</mat-icon></button>
+     </div>
+      <table class="period-table">
+        <thead>
+          <tr >
+            <td *ngFor="let p of periodsCollection[getShitName(s.shiftType)];let i=index">{{getPeriodName(i+1)}}</td>
+          </tr>
+          
+        </thead>
+        <tbody>
+          <tr>
+            <td *ngFor="let p of periodsCollection[getShitName(s.shiftType)];let i=index">{{p.startTime|date:"hh:mm a"}} - {{p.endTime|date:"hh:mm a"}} </td>
+          </tr>
+          <tr>
+            <td *ngFor="let p of periodsCollection[getShitName(s.shiftType)];let i=index">{{getClassTypeName(p.classType)}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
+<!--<p *ngFor="let s of activeShifts">{{periodsCollection[getShitName(s.shiftType)]|json}}</p>-->

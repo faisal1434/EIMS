@@ -1,0 +1,90 @@
+.employee-card {
+  width: 100%;
+  padding: 10px;
+  min-width: 300px;
+}
+
+.card-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 15px;
+}
+
+.employee-card-title {
+  padding-left: 15px;
+}
+
+.employee-card-content {
+  width: 100%;
+}
+
+.form-container {
+  padding-top: 25px;
+}
+
+.input-f-w {
+  padding: 10px 15px;
+  width: calc(100% - 30px);
+}
+
+.back-bar {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 15px;
+  width: 100%;
+}
+
+span.x {
+  flex: 1;
+  margin-right: 20px;
+  width: 20%;
+}
+
+.file-item span.last {
+  min-width: 50px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+.div-left-image{
+  display:flex;
+}
+  .image-box{
+    width:100px;
+  }
+  .right-box{
+    flex:1 1 auto;
+  }
+  .picture-fld{
+    display:flex;
+  }
+.picture-current{
+  width:50px;
+  padding:0;
+  margin-right:10px;
+}
+.picture-new{
+  width: calc(100% - 60px);
+  
+  
+}
+.fld-wrap {
+  display: flex;
+}
+.pic-attr {
+  width: calc(100% / 4);
+}
+@media(maxwidth:"700px") {
+  .employee-card {
+    width: 90%;
+    padding: 10px;
+    min-width: 300px;
+  }
+}

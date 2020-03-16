@@ -1,0 +1,48 @@
+<div class="card-wrapper">
+  <mat-card class="room-card">
+    <mat-card-header class="room-card-header">
+      <mat-card-title class="room-card-title">
+        Add new Room
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="room-card-content">
+      <div class="back-bar">
+        <a mat-mini-fab [routerLink]="['/rooms']" color="warn" style="position:relative;top:18px"><mat-icon>chevron_left</mat-icon></a>
+      </div>
+      <form class="form-container" [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="input-f-w">
+          <mat-label>Room No</mat-label>
+          <input matInput formControlName="roomNo">
+
+          <mat-error *ngIf="f.roomNo.touched && f.roomNo.hasError('required')">Room no required.</mat-error>
+          
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Room Type</mat-label>
+          <mat-select formControlName="roomType" required>
+            <mat-option [value]="null"></mat-option>
+            <ng-container *ngFor="let x of roomTypeOptions">
+              <mat-option [value]="x.value">{{x.name}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="f.roomType.touched && f.roomType.errors">Room Type required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Room Capacity</mat-label>
+          <input matInput formControlName="capacity">
+
+        </mat-form-field>
+
+        <div class="input-f-w">
+          <mat-spinner-button [options]="spinnerButtonOptions" type="submit">
+
+          </mat-spinner-button>
+        </div>
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>

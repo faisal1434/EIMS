@@ -1,0 +1,57 @@
+<div class="card-wrapper">
+  <mat-card class="employee-card">
+    <mat-card-header class="employee-card-header">
+      <mat-card-title class="employee-card-title">
+        Teacher Subjects
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="employee-card-content">
+      <div class="back-bar">
+        <a mat-mini-fab [routerLink]="['/teacher-subject']" color="warn" style="position:relative;top:18px"><mat-icon>keyboard_backspace</mat-icon></a>
+      </div>
+      <mat-divider></mat-divider>
+      <div *ngIf="teacher" style="margin-top:25px; display:flex; align-items:center;justify-content:space-around;">
+        <span style="width:25%;"><img class="row-image" [src]="imageBaseUrl + '/' + teacher.picture" height="40" /></span>
+        <span style="width:25%;">{{teacher.employeeName}}</span>
+        <span style="width:25%;">{{getClassLevelName(teacher.classLevel)}}</span>
+        <span style="width:25%;">{{getSubjectGroupName(teacher.subjectGroup)}}</span>
+      </div>
+      <div>
+        <form [formGroup]="teacherSubjectForm" class="form-container" (ngSubmit)="onSubmit()">
+          <mat-form-field class="left-box">
+            <mat-label>Ssubject</mat-label>
+            <mat-select formControlName="subjectId" required>
+              <mat-option [value]="null">(none)</mat-option>
+              <mat-option *ngFor="let op of subjectFiltered" [value]="op.subjectId">{{op.subjectName}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="f.subjectId.touched && f.subjectId.hasError('required')">Room no required.</mat-error>
+          </mat-form-field>
+          <div class="right-box">
+            <mat-spinner-button [options]="spinnerButtonOptions" type="submit">
+
+            </mat-spinner-button>
+          </div>
+        </form>
+      </div>
+      <mat-table [dataSource]="listData" matSort>
+        <ng-container matColumnDef="subjectId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Subject</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{getSubjectName(element.subjectId)}}</mat-cell>
+        </ng-container>
+       
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+           
+            <button mat-icon-button color="warn" (click)="confirmDelete(element)"><mat-icon>delete</mat-icon></button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

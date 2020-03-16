@@ -1,0 +1,141 @@
+<div class="card-wrapper">
+  <mat-card class="employee-card">
+    <mat-card-header class="employee-card-header">
+      <mat-card-title class="employee-card-title">
+        Add new employee
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="employee-card-content">
+      <div class="back-bar">
+        <a mat-mini-fab [routerLink]="['/employees']" color="warn" style="position:relative;top:18px"><mat-icon>keyboard_backspace</mat-icon></a>
+      </div>
+      <form [formGroup]="employeeDataForm" class="form-container" >
+        <mat-vertical-stepper [linear]="isLinear" #stepper>
+          <mat-step formGroupName="employeeInfo" [stepControl]="employeeDataForm.get('employeeInfo')">
+
+            <ng-template matStepLabel>Employee Information</ng-template>
+            <mat-form-field class="input-f-w">
+              <mat-label>Employee Name</mat-label>
+              <input matInput formControlName="employeeName">
+              <mat-error *ngIf="employeeDataForm.get('employeeInfo').get('employeeName').touched && employeeDataForm.get('employeeInfo').get('employeeName').hasError('required')">Employee name required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Employee Type</mat-label>
+
+              <mat-select formControlName="employeeType">
+                <mat-option [value]="null">(none)</mat-option>
+                <mat-option *ngFor="let op of employeeTypeOptions" [value]="op.value">{{op.name}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="employeeDataForm.get('employeeInfo').get('employeeType').touched && employeeDataForm.get('employeeInfo').get('employeeType').hasError('required')">Employee type required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Join Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="joinDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="employeeDataForm.get('employeeInfo').get('joinDate').touched && employeeDataForm.get('employeeInfo').get('joinDate').hasError('required')">Join date required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Designation</mat-label>
+             
+              <mat-select formControlName="designationId">
+                <mat-option [value]="null">(none)</mat-option>
+                <mat-option *ngFor="let op of designations" [value]="op.designationId">{{op.postName}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="employeeDataForm.get('employeeInfo').get('designationId').touched && employeeDataForm.get('employeeInfo').get('designationId').hasError('required')">Designation required.</mat-error>
+            </mat-form-field>
+            <div class="input-f-w">
+              <button mat-stroked-button color="primary" matStepperNext>Next <mat-icon>navigate_next</mat-icon></button>
+            </div>
+
+          </mat-step>
+          <mat-step formGroupName="personalInfo" [stepControl]="employeeDataForm.get('personalInfo')">
+
+            <ng-template matStepLabel>Contact and Address information</ng-template>
+            <mat-form-field class="input-f-w">
+              <mat-label>Present Address</mat-label>
+              <input matInput formControlName="presentAddress" />
+              <mat-error *ngIf="employeeDataForm.get('personalInfo').get('presentAddress').touched && employeeDataForm.get('personalInfo').get('presentAddress').hasError('required')">Present Address required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Permanent Address</mat-label>
+              <input matInput formControlName="permanentAddress" />
+              <mat-error *ngIf="employeeDataForm.get('personalInfo').get('permanentAddress').touched && employeeDataForm.get('personalInfo').get('permanentAddress').hasError('required')">Present Address required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Phone</mat-label>
+              <input matInput formControlName="phone" />
+              <mat-error *ngIf="employeeDataForm.get('personalInfo').get('phone').touched && employeeDataForm.get('personalInfo').get('phone').hasError('required')">Phone number required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" />
+              <mat-error *ngIf="employeeDataForm.get('personalInfo').get('email').touched && employeeDataForm.get('personalInfo').get('email').hasError('required')">Email address required.</mat-error>
+            </mat-form-field>
+            <div>
+              <button mat-stroked-button color="primary" matStepperPrevious><mat-icon>navigate_before</mat-icon> Back</button> &nbsp;
+              <button mat-stroked-button color="primary" matStepperNext>Next <mat-icon>navigate_next</mat-icon></button>
+            </div>
+
+          </mat-step>
+          <mat-step formGroupName="pictureFileAttach" [stepControl]="employeeDataForm.get('pictureFileAttach')">
+            <ng-template matStepLabel>Employee Picture</ng-template>
+            <div class="input-f-w">
+              <input matInput style="display:none" formControlName="picture" [value]="selectedFile?.name" />
+              <input style="display: none"
+                     type="file" (change)="onFileSelected($event)"
+                     #fileInput name="file">
+              <div class="picture-fld">
+                
+                <div class="picture-new">
+                  <div class="fld-wrap">
+                    <div class="pic-attr">File</div>
+                    <div class="pic-attr">Type</div>
+                    <div class="pic-attr">Size</div>
+                    <div class="pic-attr">..</div>
+                  </div>
+                  <div class="fld-wrap" *ngIf="!selectedFile">
+                    <div class="pic-attr">-</div>
+                    <div class="pic-attr">-</div>
+                    <div class="pic-attr">-</div>
+                    <div class="pic-attr">
+                      <button mat-icon-button (click)="fileInput.click()"><mat-icon>cloud_upload</mat-icon></button>
+                    </div>
+                  </div>
+                  <div class="fld-wrap" *ngIf="selectedFile">
+                    <div class="pic-attr">{{'..'+ selectedFile.name.substr(selectedFile.name.length-10, 10)}}</div>
+                    <div class="pic-attr">{{selectedFile.type}}</div>
+                    <div class="pic-attr">{{selectedFile.size}}</div>
+                    <div class="pic-attr">
+                      <button mat-icon-button (click)="removeImage()"><mat-icon>remove_circle_outline</mat-icon></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+            </div>
+         
+            <div>
+              <button mat-stroked-button color="primary" matStepperPrevious><mat-icon>navigate_before</mat-icon> Back</button> &nbsp;
+              <button mat-stroked-button color="primary" (click)="onSubmit()" matStepperNext>Save and Proceed <mat-icon>navigate_next</mat-icon></button>
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            You are now done.
+            <div>
+              <button mat-stroked-button matStepperPrevious><mat-icon>navigate_before</mat-icon> Back</button>
+              <button mat-stroked-button (click)="stepper.reset()"><mat-icon>refresh</mat-icon> Reset</button>
+              <!--<mat-spinner-button [options]="spinnerButtonOptions" type="submit" (click)="onSubmit()">
+
+              </mat-spinner-button>-->
+            </div>
+          </mat-step>
+        </mat-vertical-stepper>
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>

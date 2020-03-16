@@ -1,0 +1,156 @@
+<div class="card-wrapper">
+  <mat-card class="student-card">
+    <mat-card-header class="student-card-header">
+      <mat-card-title class="student-card-title">
+        Add new student
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="student-card-content">
+      <div class="back-bar">
+        <a mat-mini-fab [routerLink]="['/students']" color="warn" style="position:relative;top:18px"><mat-icon>keyboard_backspace</mat-icon></a>
+      </div>
+      <form [formGroup]="studentDataForm" class="form-container" >
+        <mat-vertical-stepper [linear]="isLinear" #stepper>
+          <mat-step formGroupName="studentInfo" [stepControl]="studentDataForm.get('studentInfo')">
+
+            <ng-template matStepLabel>Studenet Information</ng-template>
+            <mat-form-field class="input-f-w">
+              <mat-label>Student name</mat-label>
+              <input matInput formControlName="studentName">
+              <mat-error *ngIf="studentDataForm.get('studentInfo').get('studentName').touched && studentDataForm.get('studentInfo').get('studentName').hasError('required')">Employee name required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Roll No.</mat-label>
+              <input matInput formControlName="roll">
+              <mat-error *ngIf="studentDataForm.get('studentInfo').get('roll').touched && studentDataForm.get('studentInfo').get('roll').hasError('required')">Employee name required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Birth Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="birthDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="studentDataForm.get('studentInfo').get('birthDate').touched && studentDataForm.get('studentInfo').get('birthDate').hasError('required')">Birth date required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Gender</mat-label>
+              <mat-select formControlName="gender">
+                <mat-option [value]="null">(none)</mat-option>
+                <mat-option *ngFor="let op of genderOptions" [value]="op.value">{{op.name}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="studentDataForm.get('studentInfo').get('gender').touched && studentDataForm.get('studentInfo').get('gender').hasError('required')">Gender required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Section</mat-label>
+              <mat-select formControlName="sectionId">
+                <mat-option [value]="null">(none)</mat-option>
+                <mat-option *ngFor="let op of sections" [value]="op.sectionId">{{op.sectionName}} [{{op.academicClass.className}}]</mat-option>
+              </mat-select>
+              <mat-error *ngIf="studentDataForm.get('studentInfo').get('sectionId').touched && studentDataForm.get('studentInfo').get('sectionId').hasError('required')">Designation required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Subject Group</mat-label>
+              <mat-select formControlName="bloodGroup">
+                <mat-option [value]="null">(none)</mat-option>
+                <mat-option *ngFor="let op of bloodGroupOptions" [value]="op.value">{{op.name}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="studentDataForm.get('studentInfo').get('bloodGroup').touched && studentDataForm.get('studentInfo').get('bloodGroup').hasError('required')">Designation required.</mat-error>
+            </mat-form-field>
+            <div class="input-f-w">
+              <button mat-stroked-button color="primary" matStepperNext>Next <mat-icon>navigate_next</mat-icon></button>
+            </div>
+
+          </mat-step>
+          <mat-step formGroupName="parentalInfo" [stepControl]="studentDataForm.get('parentalInfo')">
+
+            <ng-template matStepLabel>Parent information</ng-template>
+
+            <mat-form-field class="input-f-w">
+              <mat-label>Father name</mat-label>
+              <input matInput formControlName="fatherName" />
+              <mat-error *ngIf="studentDataForm.get('parentalInfo').get('fatherName').touched && studentDataForm.get('parentalInfo').get('fatherName').hasError('required')">Present Address required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Mother name</mat-label>
+              <input matInput formControlName="motherName" />
+              <mat-error *ngIf="studentDataForm.get('parentalInfo').get('motherName').touched && studentDataForm.get('parentalInfo').get('motherName').hasError('required')">Present Address required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Phone</mat-label>
+              <input matInput formControlName="phone" />
+              <mat-error *ngIf="studentDataForm.get('parentalInfo').get('phone').touched && studentDataForm.get('parentalInfo').get('phone').hasError('required')">Phone number required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" />
+              <mat-error *ngIf="studentDataForm.get('parentalInfo').get('email').touched && studentDataForm.get('parentalInfo').get('email').hasError('required')">Email address required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-f-w">
+              <mat-label>Address</mat-label>
+              <input matInput formControlName="address" />
+              <mat-error *ngIf="studentDataForm.get('parentalInfo').get('address').touched && studentDataForm.get('parentalInfo').get('address').hasError('required')">Email address required.</mat-error>
+            </mat-form-field>
+            <div>
+              <button mat-stroked-button color="primary" matStepperPrevious><mat-icon>navigate_before</mat-icon> Back</button> &nbsp;
+              <button mat-stroked-button color="primary" matStepperNext>Next <mat-icon>navigate_next</mat-icon></button>
+            </div>
+
+          </mat-step>
+          <mat-step formGroupName="pictureFileAttach" [stepControl]="studentDataForm.get('pictureFileAttach')">
+            <ng-template matStepLabel>Employee Picture</ng-template>
+            <div class="input-f-w">
+              <input matInput style="display:none" formControlName="picture" [value]="selectedFile?.name" />
+              <input style="display: none"
+                     type="file" (change)="onFileSelected($event)"
+                     #fileInput name="file">
+              <div class="picture-fld">
+
+                <div class="picture-new">
+                  <div class="fld-wrap">
+                    <div class="pic-attr">File</div>
+                    <div class="pic-attr">Type</div>
+                    <div class="pic-attr">Size</div>
+                    <div class="pic-attr">..</div>
+                  </div>
+                  <div class="fld-wrap" *ngIf="!selectedFile">
+                    <div class="pic-attr">-</div>
+                    <div class="pic-attr">-</div>
+                    <div class="pic-attr">-</div>
+                    <div class="pic-attr">
+                      <button mat-icon-button (click)="fileInput.click()"><mat-icon>cloud_upload</mat-icon></button>
+                    </div>
+                  </div>
+                  <div class="fld-wrap" *ngIf="selectedFile">
+                    <div class="pic-attr">{{'..'+ selectedFile.name.substr(selectedFile.name.length-10, 10)}}</div>
+                    <div class="pic-attr">{{selectedFile.type}}</div>
+                    <div class="pic-attr">{{selectedFile.size}}</div>
+                    <div class="pic-attr">
+                      <button mat-icon-button (click)="removeImage()"><mat-icon>remove_circle_outline</mat-icon></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+            </div>
+
+            <div>
+              <button mat-stroked-button color="primary" matStepperPrevious><mat-icon>navigate_before</mat-icon> Back</button> &nbsp;
+              <button mat-stroked-button color="primary" (click)="onSubmit()" matStepperNext>Save and Proceed <mat-icon>navigate_next</mat-icon></button>
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            You are now done.
+            <div>
+              <button mat-stroked-button matStepperPrevious><mat-icon>navigate_before</mat-icon> Back</button>
+              <button mat-stroked-button (click)="stepper.reset()"><mat-icon>refresh</mat-icon> Reset</button>
+
+            </div>
+          </mat-step>
+        </mat-vertical-stepper>
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>

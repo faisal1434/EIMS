@@ -1,0 +1,13 @@
+.card-wrapper{
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+}
+.class-card {
+  width: calc(100% - 30px);
+}
+
+.add-bar {
+  display: flex;
+  justify-content: flex-end;
+}

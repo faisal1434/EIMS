@@ -1,0 +1,86 @@
+<div class="card-wrapper">
+  <div class="mat-elevation-z3" style="margin-bottom:3px;">
+    <div class="data-loading-shade"
+         *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+  </div>
+  <mat-card class="profile-card">
+    <mat-card-header class="profile-card-header">
+      <mat-card-title class="profile-card-title">
+        Student profile
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="profile-card-content" *ngIf="student">
+      <div class="back-bar">
+        <a mat-mini-fab [routerLink]="['/students']" color="warn" style="position:relative;top:18px"><mat-icon>keyboard_backspace</mat-icon></a>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="top-box">
+        <div class="img-box">
+          <img *ngIf="student" [src]="apiBaseUrl+''+student.picture" class="row-image mat-elevation-z8" width="150" />
+        </div>
+        <div class="title-box">
+
+          <h2 class="mat-title">{{student?.studentName}}</h2>
+
+
+        </div>
+      </div>
+      <h2 class="mat-title" style="padding-left:25px;margin-top:25px;">Studnet infomation</h2>
+      <mat-divider></mat-divider>
+      <div class="address-box">
+
+        <div class="lebel-box">Roll</div>
+        <div class="text-box">{{student.roll}}</div>
+      </div>
+      <div class="address-box">
+
+        <div class="lebel-box">Section/Class</div>
+        <div class="text-box">{{getSectionClassName(student.sectionId)}}</div>
+      </div>
+      <div class="address-box">
+
+        <div class="lebel-box">Gender</div>
+        <div class="text-box">{{getGenderName(student.gender)}}</div>
+      </div>
+      <div class="address-box">
+
+        <div class="lebel-box">Date of Birth</div>
+        <div class="text-box">{{student.birthDate|date: 'yyyy-MM-dd'}}</div>
+      </div>
+      <div class="address-box">
+
+        <div class="lebel-box">Blood group</div>
+        <div class="text-box">{{getBloodGroupName(student.bloodGroup)}}</div>
+      </div>
+      <h2 class="mat-title" style="padding-left:25px;margin-top:25px;">Parent infomation</h2>
+      <mat-divider></mat-divider>
+      <div class="address-box">
+
+        <div class="lebel-box">Father</div>
+        <div class="text-box">{{student.fatherName}}</div>
+      </div>
+      <div class="address-box">
+
+        <div class="lebel-box">Mother</div>
+        <div class="text-box">{{student.motherName}}</div>
+      </div>
+      <div class="address-box">
+
+        <div class="lebel-box">Phone</div>
+        <div class="text-box">{{student.phone}}</div>
+      </div>
+      <div class="address-box">
+
+        <div class="lebel-box">Email</div>
+        <div class="text-box">{{student.email}}</div>
+      </div>
+      <div class="address-box">
+
+        <div class="lebel-box">Address</div>
+        <div class="text-box">{{student.address}}</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

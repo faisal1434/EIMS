@@ -1,0 +1,55 @@
+<div class="card-wrapper">
+  <mat-card class="subject-card">
+    <mat-card-header class="class-card-header">
+      <mat-card-title class="class-card-title">
+        Add new section
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="subject-card-content">
+      <div class="back-bar">
+        <a mat-mini-fab [routerLink]="['/sections']" color="warn" style="position:relative;top:18px"><mat-icon>keyboard_backspace</mat-icon></a>
+      </div>
+      <form class="form-container" [formGroup]="sectionForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="input-f-w">
+          <mat-label>Subject Name</mat-label>
+          <input matInput formControlName="sectionName" required>
+
+          <mat-error *ngIf="f.sectionName.touched && f.sectionName.hasError('required')">Subject name required.</mat-error>
+
+        </mat-form-field>
+
+
+
+        <mat-form-field class="input-f-w">
+          <mat-label>Class</mat-label>
+          <mat-select formControlName="academicClassId" (selectionChange)="onChange($event.value)" required>
+            <mat-option [value]="null"></mat-option>
+            <ng-container *ngFor="let x of classList">
+              <mat-option [value]="x.academicClassId">{{x.className}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="f.academicClassId.touched && f.academicClassId.errors">Subject Type required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Subject Group</mat-label>
+          <mat-select formControlName="subjectGroup" required>
+            <mat-option [value]="null"></mat-option>
+            <ng-container *ngFor="let x of subjectGroupOptions">
+              <mat-option [value]="x.value" [disabled]="getDisbaled(x.value)">{{x.name}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="f.subjectGroup.touched && f.subjectGroup.errors">Subject group required</mat-error>
+
+        </mat-form-field>
+        <div class="input-f-w">
+          <mat-spinner-button [options]="spinnerButtonOptions" type="submit">
+          </mat-spinner-button>
+        </div>
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>

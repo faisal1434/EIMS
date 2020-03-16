@@ -1,0 +1,75 @@
+<div class="card-wrapper">
+  <mat-card class="institute-card">
+    <mat-card-title class="institute-card-title">
+      Edit Academic Info
+    </mat-card-title>
+    <mat-card-content class="institute-card-content">
+      <div>
+        <a mat-mini-fab [routerLink]="['/home']" color="warn"><mat-icon>keyboard_arrow_left</mat-icon></a>
+      </div>
+      <form class="form-container" [formGroup]="intituteInfoForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="input-f-w">
+          <mat-label>Institute Name</mat-label>
+          <input matInput formControlName="instituteName" required>
+          <mat-error *ngIf="f.instituteName.touched && f.instituteName.errors">Session Year required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Institute Slogan</mat-label>
+          <input matInput formControlName="instituteSlogan" required>
+          <mat-error *ngIf="f.instituteSlogan.touched && f.instituteSlogan.errors">Session Year required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Institute Address</mat-label>
+          <input matInput formControlName="address" required>
+          <mat-error *ngIf="f.address.touched && f.address.errors">Session Year required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Institute Description</mat-label>
+          <textarea matInput formControlName="description" rows="6" required></textarea>
+          <mat-error *ngIf="f.description.touched && f.description.errors">Session Year required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Eshlablished</mat-label>
+          <input matInput formControlName="established" required [matDatepicker]="established">
+          <mat-datepicker-toggle matSuffix [for]="established"></mat-datepicker-toggle>
+          <mat-datepicker #established></mat-datepicker>
+          <mat-error *ngIf="f.established.touched && f.established.errors">Start date required</mat-error>
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Founder Name</mat-label>
+          <input matInput formControlName="founderName" required>
+          <mat-error *ngIf="f.founderName.touched && f.founderName.errors">Session Year required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Principal Name</mat-label>
+          <input matInput formControlName="principalName" required>
+          <mat-error *ngIf="f.principalName.touched && f.principalName.errors">Session Year required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Phone</mat-label>
+          <input matInput formControlName="phone" required>
+          <mat-error *ngIf="f.phone.touched && f.phone.errors">Session Year required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required>
+          <mat-error *ngIf="f.email.touched && f.email.errors">Session Year required</mat-error>
+
+        </mat-form-field>
+        <div class="input-f-w">
+          <mat-spinner-button [options]="spinnerButtonOptions" type="submit">
+
+          </mat-spinner-button>
+        </div>
+      </form>
+
+    </mat-card-content>
+  </mat-card>
+</div>

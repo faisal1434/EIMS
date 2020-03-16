@@ -1,0 +1,36 @@
+<div class="card-wrapper">
+<mat-card class="login-card">
+  <mat-card-title class="login-card-title">
+    Log in
+  </mat-card-title>
+
+
+  <mat-card-content class="login-card-content">
+    <form class="form-container" [formGroup]="loginForm">
+      <mat-form-field class="input-f-w">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required>
+        <mat-error *ngIf="f.username.touched && f.username.errors">Username required</mat-error>
+
+      </mat-form-field>
+      <mat-form-field class="input-f-w">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" required>
+        <mat-error *ngIf="f.password.touched && f.password.errors">Username required</mat-error>
+
+      </mat-form-field>
+      <div class="input-f-w">
+        <mat-spinner-button [options]="spinnerButtonOptions" 
+                            (btnClick)="onSubmit()">
+        </mat-spinner-button>
+      </div>
+      <div class="input-f-w">
+        <mat-error *ngIf="error">{{error}}</mat-error>
+      </div>
+    </form>
+
+  </mat-card-content>
+
+</mat-card>
+
+</div>

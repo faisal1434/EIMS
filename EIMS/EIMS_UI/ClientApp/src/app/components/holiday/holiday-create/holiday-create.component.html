@@ -1,0 +1,54 @@
+<div class="card-wrapper">
+  <mat-card class="holiday-card">
+    <mat-card-header class="holiday-card-header">
+      <mat-card-title class="holiday-card-title">
+        Add new holiday entry
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="holiday-card-content">
+      <div class="back-bar">
+        <a mat-mini-fab [routerLink]="['/holidays']" color="warn" style="position:relative;top:18px"><mat-icon>keyboard_backspace</mat-icon></a>
+      </div>
+      <form class="form-container" [formGroup]="holidayForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="input-f-w">
+          <mat-label>Holiday date</mat-label>
+          <input matInput formControlName="holidayDate" required [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="f.holidayDate.touched && f.holidayDate.errors">Holiday date required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Holiday type</mat-label>
+          <mat-select formControlName="holidayType" (selectionChange)="onSelectionChange($event.value)">
+            <mat-option [value]="null">(none)</mat-option>
+            <ng-container *ngFor="let x of holidayTypeOptions">
+              <mat-option [value]="x.value">{{x.name}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="f.holidayType.tuched && f.holidayType.errors">Holiday type required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Duration(days)</mat-label>
+          <input matInput formControlName="duration">
+          <mat-error *ngIf="f.duration.touched && f.duration.errors">Duration required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" required>
+          <mat-error *ngIf="f.description.touched && f.description.errors">Description required</mat-error>
+
+        </mat-form-field>
+        <div class="input-f-w">
+          <mat-spinner-button [options]="spinnerButtonOptions" type="submit">
+          </mat-spinner-button>
+        </div>
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>

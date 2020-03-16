@@ -1,0 +1,224 @@
+<div class="wrapper">
+  <mat-card class="setting-card">
+    <mat-card-header class="setting-card-header">
+      <mat-card-title class="setting-card-title">
+        Session
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="setting-card-content">
+      <div class="input-f-w">
+        <mat-list>
+          <mat-list-item class="session-item" [ngClass]="session.sessionStatus== 1 ? 'current': ''" *ngFor="let session of academicSessions">
+            <span class="session-name">{{session.sessionName}}</span>
+            <span class="spacer"></span>
+            <span>{{session.startDate|date: 'MMM dd, yyyy'}} - {{session.endDate|date: 'MMM dd, yyyy'}}</span>
+            <span class="spacer"></span>
+            <span class="span-status">{{getSessionStatuName(session.sessionStatus) }}</span>
+            <span class="last">
+
+              <button *ngIf="session.sessionStatus!= 1" mat-icon-button (click)="deleteSession(session)"><mat-icon>delete</mat-icon></button>
+              &nbsp;
+            </span>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+
+        </mat-list>
+      </div>
+
+      <form #f1="ngForm" class="form-container" (submit)="onSessionSubmit(f1)">
+        <div class="input-f-w">
+          <div class="check-section">
+            <mat-form-field class="three-col">
+              <mat-label>Session Name</mat-label>
+              <input matInput [(ngModel)]="sessionFormTemplate.sessionName" #sessionName="ngModel" name="sessionName" required>
+              <mat-error *ngIf="sessionName.touched && sessionName.errors">Name required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="three-col">
+              <mat-label>Start Date</mat-label>
+              <input matInput [matDatepicker]="startPicker" [(ngModel)]="sessionFormTemplate.startDate" #startDate="ngModel" name="startDate" required>
+
+              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+              <mat-error *ngIf="startDate.touched && startDate.errors">Start date required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="three-col">
+              <mat-label>End Date</mat-label>
+              <input matInput [matDatepicker]="endPicker" [(ngModel)]="sessionFormTemplate.endDate" #endDate="ngModel" name="endDate" required>
+              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+              <mat-error *ngIf="endDate.touched && endDate.errors">End date required.</mat-error>
+            </mat-form-field>
+            <div class="three-col1">
+
+              <mat-radio-group [(ngModel)]="sessionFormTemplate.sessionStatus" name="sessionStatus" #sessionStatus="ngModel" required>
+                <mat-radio-button *ngFor="let op of sessionStatusOptions" class="chk" [value]="op.value" name="{{op.name}}">
+                  {{op.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+              <mat-error *ngIf="f1.dirty && sessionStatus.errors">Status required.</mat-error>
+            </div>
+            <div class="three-col">
+              <mat-spinner-button [options]="businessDayButtonOptions"
+                                  type="submit">
+              </mat-spinner-button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="setting-card">
+    <mat-card-header class="setting-card-header">
+      <mat-card-title class="setting-card-title">
+        Class days
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="setting-card-content">
+      <form #f2="ngForm" class="form-container" (submit)="onBusinessDaySubmit(f2)">
+        <div class="input-f-w">
+          <div class="check-section">
+            <mat-checkbox *ngFor="let form_elem of formTemplate" class="chk" [(ngModel)]="form_elem.checked" name="{{form_elem.label}}">{{form_elem.label}}</mat-checkbox>
+            <mat-spinner-button [options]="businessDayButtonOptions"
+                                type="submit">
+            </mat-spinner-button>
+          </div>
+
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="setting-card">
+    <mat-card-header class="setting-card-header">
+      <mat-card-title class="setting-card-title">
+        Class Duration
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="setting-card-content">
+      <form #f3="ngForm" class="form-container" (submit)="onSubmitDurationForm(f3)">
+        <div class="input-f-w">
+          <div class="check-section">
+            <mat-form-field class="three-col" *ngFor="let el of classTypeOptions">
+              <mat-label>{{el.name}}</mat-label>
+              <input type="number" matInput [(ngModel)]="el.duration" name="{{el.name}}">
+            </mat-form-field>
+            <div class="three-col">
+              <mat-spinner-button [options]="businessDayButtonOptions"
+                                  type="submit">
+              </mat-spinner-button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="setting-card">
+    <mat-card-header class="setting-card-header">
+      <mat-card-title class="setting-card-title">
+        Shifts
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="setting-card-content">
+      <form #f4="ngForm" class="form-container" (submit)="onSubmitShiftForm(f4)">
+        <div class="input-f-w">
+          <div class="check-section" *ngFor="let el of shiftTypeOptions">
+            <mat-label class="inline-field label-field">{{el.name}}</mat-label>
+            <mat-form-field class="inline-field">
+              <mat-label>Start Time</mat-label>
+
+              <div style="display:flex">
+                <input matInput [ngxTimepicker]="sPicker" [(ngModel)]="el.startTime" name="{{el.label+'startTime'}}">
+                <ngx-material-timepicker #sPicker></ngx-material-timepicker>
+                <ngx-material-timepicker-toggle [for]="sPicker"></ngx-material-timepicker-toggle>
+
+              </div>
+            </mat-form-field>
+            <mat-form-field class="inline-field">
+              <mat-label>End Time</mat-label>
+              <div style="display:flex">
+                <input matInput [ngxTimepicker]="ePicker" [(ngModel)]="el.endTime" name="{{el.label+'endTime'}}">
+                <ngx-material-timepicker #ePicker></ngx-material-timepicker>
+                <ngx-material-timepicker-toggle [for]="ePicker"></ngx-material-timepicker-toggle>
+
+              </div>
+
+            </mat-form-field>
+            <div class="inline-field">
+
+              <mat-checkbox [(ngModel)]="el.active" name="{{el.label}}">Active</mat-checkbox>
+            </div>
+          </div>
+
+        </div>
+        <div class="input-f-w" *ngIf="shiftFormError">
+          <mat-error>{{shiftFormError}}</mat-error>
+        </div>
+        <div>
+          <mat-spinner-button [options]="businessDayButtonOptions"
+                              type="submit">
+          </mat-spinner-button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="setting-card">
+    <mat-card-header class="setting-card-header">
+      <mat-card-title class="setting-card-title">
+        Running Education Levels
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="setting-card-content">
+      <form #f5="ngForm" class="form-container" (submit)="onEducationLevelSubmit(f5)">
+        <div class="input-f-w">
+          <div class="check-section">
+            <mat-checkbox *ngFor="let cl of classLevels" class="chk" [(ngModel)]="cl.isRunning" name="{{cl.educationLevel}}">{{getEducationLevelName(cl.educationLevel)}}</mat-checkbox>
+            <mat-spinner-button [options]="businessDayButtonOptions"
+                                type="submit">
+            </mat-spinner-button>
+          </div>
+
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="setting-card">
+    <mat-card-header class="setting-card-header">
+      <mat-card-title class="setting-card-title">
+        Designations
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="setting-card-content">
+      <div class="designation-box">
+        <mat-list class="box-part">
+          <mat-list-item *ngFor="let d of designations">
+            <span>{{d.postName}}</span>
+            <span class="spacer"></span>
+            <span>
+              <button mat-icon-button (click)="deleteDesignation(d)"><mat-icon>delete</mat-icon></button>
+            </span>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+
+        </mat-list>
+        <form #f6="ngForm" class="box-part form-part" (submit)="onPostSbmit(f6)">
+          <mat-form-field>
+            <mat-label>Post Name</mat-label>
+            <input matInput [(ngModel)]="designation.postName" name="postName" #postName="ngModel" />
+          </mat-form-field>
+          <div>
+            <mat-spinner-button [options]="businessDayButtonOptions"
+                                type="submit">
+            </mat-spinner-button>
+          </div>
+        </form>
+      </div>
+
+
+      
+    </mat-card-content>
+  </mat-card>
+</div>

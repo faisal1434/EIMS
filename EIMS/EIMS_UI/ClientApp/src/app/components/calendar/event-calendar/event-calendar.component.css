@@ -1,0 +1,22 @@
+.holiday-card {
+  width: 100%;
+}
+
+.holiday-card-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.holiday-card-title {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.holiday-card .mat-card-header-text {
+  width: 100%;
+}
+
+.holiday-card-content {
+  padding: 0 15px;
+}

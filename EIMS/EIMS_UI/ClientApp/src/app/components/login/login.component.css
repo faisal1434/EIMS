@@ -1,0 +1,32 @@
+.card-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 15px;
+}
+
+.login-card {
+  width: 50%;
+  padding: 20px 10px;
+  min-width: 300px;
+}
+
+.login-card-title {
+  padding-left: 15px;
+}
+
+.login-card-content {
+  width: 100%;
+}
+
+.input-f-w {
+  padding: 10px 15px;
+  width: calc(100% - 30px);
+}
+@media(max-width:500px){
+  .login-card {
+    width: calc(100% - 30px);
+    padding: 10px;
+    min-width: 300px;
+  }
+}

@@ -1,0 +1,74 @@
+<div class="wrapper">
+  
+  <div class="card highlight-card card-small">
+    <a class="circle-wrap"> <img src="../../assets/presentation_1.svg" width="80" /></a>
+    <span>{{instituteInfo?.instituteName || 'loading...'}}</span>
+    <span class="menu-spacer"></span>
+    <span class="datetime">{{date | date }}</span>
+  </div>
+  <mat-card class="info-card mat-elevation-z0">
+    <mat-card-header class="info-card-header">
+      <mat-card-title class="info-card-title">
+        <span>{{instituteInfo?.instituteName || 'loading...'}}</span>
+        <div class="menu-spacer"></div>
+        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+          <button mat-menu-item [routerLink]="['/institute-info-edit', instituteInfo?.instituteInfoId]">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+        </mat-menu>
+      </mat-card-title>
+      <mat-card-subtitle>{{instituteInfo?.instituteSlogan || 'loading...'}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="info-card-content">
+      <mat-list>
+        <h3 mat-subheader>At a glance</h3>
+        <mat-list-item>
+          <mat-icon mat-list-icon>details</mat-icon>
+          <h4 mat-line>About</h4>
+          <p mat-line> {{instituteInfo?.description || 'loading...'}} </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <mat-icon mat-list-icon>event</mat-icon>
+          <h4 mat-line>Established</h4>
+          <p mat-line> {{(instituteInfo?.established | date) || 'loading...'}} </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <mat-icon mat-list-icon>person_pin</mat-icon>
+          <h4 mat-line>Founder</h4>
+          <p mat-line> {{instituteInfo?.founderName  || 'loading...'}} </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <mat-icon mat-list-icon>perm_contact_calendar</mat-icon>
+          <h4 mat-line>Principal</h4>
+          <p mat-line> {{instituteInfo?.principalName  || 'loading...'}} </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <mat-icon mat-list-icon>my_location</mat-icon>
+          <h4 mat-line>Address</h4>
+          <p mat-line> {{instituteInfo?.address  || 'loading...'}} </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>
+          <mat-icon mat-list-icon>contacts</mat-icon>
+          <h4 mat-line>Contact</h4>
+          <p mat-line> {{instituteInfo?.email  || 'loading...'}} </p>
+          <p mat-line> {{instituteInfo?.phone  || 'loading...'}} </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+      </mat-list>
+
+
+    </mat-card-content>
+  </mat-card>
+  
+</div>

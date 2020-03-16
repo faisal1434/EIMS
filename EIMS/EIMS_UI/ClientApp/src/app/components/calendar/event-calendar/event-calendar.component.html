@@ -1,0 +1,15 @@
+<div class="card-wrapper">
+  <mat-card class="holiday-card">
+    <mat-card-header class="holiday-card-header">
+      <mat-card-title class="holiday-card-title">
+        Holiday & Event calendar
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="holiday-card-content">
+      <full-calendar defaultView="dayGridMonth" *ngIf="options" style="width:100%" 
+                     [events]="events" [weekends]="true" theme="standard" [plugins]="calendarPlugins"></full-calendar>
+
+    </mat-card-content>
+  </mat-card>
+
+</div>

@@ -1,0 +1,90 @@
+<div class="card-wrapper">
+  <div class="mat-elevation-z3" style="margin-bottom:3px;">
+    <div class="data-loading-shade"
+         *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+  </div>
+  <mat-card class="qualification-card">
+    <mat-card-header class="qualification-card-header">
+      <mat-card-title class="qualification-card-title">
+        <span *ngIf="selectedTeacherId">{{getTeacherName(selectedTeacherId)}}'s </span> Education Background
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="qualification-card-content">
+      <div class="input-select-teacher">
+        <mat-form-field style="margin-right:10px;" >
+          <mat-select placeholder="select teacher.." (selectionChange)="selectTeacher($event.value)">
+
+            <mat-option [value]="null">(none)</mat-option>
+            <ng-container *ngFor="let x of teachers">
+              <mat-option [value]="x.employeeId">{{x.employeeName}}</mat-option>
+            </ng-container>
+          </mat-select>
+
+        </mat-form-field>
+        <button mat-mini-fab color="accent" (click)="showForm()" style="padding:0"><mat-icon>{{displayForm ? 'remove': 'add'}}</mat-icon></button>
+      </div>
+      <div class="form-warp"  [style.display]="displayForm ? 'block': 'none'">
+        <form class="form-container" [formGroup]="qualificationForm" (ngSubmit)="onSubmit()">
+          <mat-form-field class="input-f-w">
+            <mat-label>Year</mat-label>
+            <input matInput formControlName="completionYear">
+            <mat-error *ngIf="f.completionYear.touched && f.completionYear.hasError('required')">Completion year required.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="input-f-w">
+            <mat-label>Degree</mat-label>
+            <input matInput formControlName="degree">
+            <mat-error *ngIf="f.degree.touched && f.degree.hasError('required')">Degree name required.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="input-f-w">
+            <mat-label>University/college/university</mat-label>
+            <input matInput formControlName="instituteName">
+            <mat-error *ngIf="f.instituteName.touched && f.instituteName.hasError('required')">Institute name required.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="input-f-w">
+            <mat-label>Result</mat-label>
+            <input matInput formControlName="result">
+            <mat-error *ngIf="f.result.touched && f.result.hasError('required')">Institute name required.</mat-error>
+          </mat-form-field>
+          <div class="input-f-w">
+            <mat-spinner-button [options]="btnOptions" type="submit">
+            </mat-spinner-button>
+          </div>
+        </form>
+      </div>
+      <mat-table [dataSource]="listData" matSort>
+        <ng-container matColumnDef="completionYear">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Year</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.completionYear}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="degree">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Degree</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.degree}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="instituteName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Institute Name</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.instituteName}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="result">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Result</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.result}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Manipulate </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <!--<button mat-icon-button [routerLink]="['/holiday-edit', element.holidayId]"><mat-icon>edit</mat-icon></button>-->
+        <button mat-icon-button color="warn" (click)="confirmDelete(element)"><mat-icon>delete</mat-icon></button>
+      </mat-cell>
+    </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

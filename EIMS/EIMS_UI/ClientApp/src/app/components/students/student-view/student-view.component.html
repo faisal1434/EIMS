@@ -1,0 +1,66 @@
+<div class="card-wrapper">
+  <div class="mat-elevation-z3" style="margin-bottom:3px;">
+    <div class="data-loading-shade"
+         *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+  </div>
+  <mat-card class="student-card">
+    <mat-card-header class="student-card-header">
+      <mat-card-title class="student-card-title">
+        Student List
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="student-card-content">
+      <div class="add-bar">
+        <button mat-mini-fab style="position:relative;top:18px;" color="warn" [routerLink]="['/student-create']"><mat-icon>add</mat-icon></button>
+      </div>
+      <mat-divider></mat-divider>
+      <mat-form-field class="input-f-w">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+      <mat-table [dataSource]="listData" matSort>
+        <ng-container matColumnDef="picture">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Picture</mat-header-cell>
+          <mat-cell *matCellDef="let element"><img class="row-image" [src]="imageBaseUrl + '/' + element.picture" height="40" /></mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="studentName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Student Name</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{element.studentName}}
+            <a fxFlexFill [routerLink]="['/student-profile', element.studentId]" class="mat-row-link"></a>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="roll">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Roll No.</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.roll}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="sectionId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Section</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{getSectionClassName(element.sectionId)}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="birthDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Date of Birth</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.birthDate| date: 'yyyy-MM-dd'}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="designationId">
+
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Designation</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{getDesignationName(element.designationId)}}</mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button [routerLink]="['/student-edit', element.studentId]"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button color="warn" (click)="confirmDelete(element)"><mat-icon>delete</mat-icon></button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

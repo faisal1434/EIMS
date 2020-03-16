@@ -1,0 +1,67 @@
+<div class="card-wrapper">
+  <div class="mat-elevation-z3" style="margin-bottom:3px;">
+    <div class="data-loading-shade"
+         *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+  </div>
+  <mat-card class="subject-card">
+    <mat-card-header class="subject-card-header">
+      <mat-card-title class="subject-card-title">
+        Subjects
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="class-card-content">
+      <div class="add-bar">
+        <button mat-mini-fab style="position:relative;top:18px;" color="warn" [routerLink]="['/subject-create']"><mat-icon>add</mat-icon></button>
+      </div>
+      <mat-divider></mat-divider>
+      <mat-form-field class="input-f-w">
+        <mat-select placeholder="Level.." (selectionChange)="applyFilter($event.value)">
+          
+          <mat-option [value]="null">(none)</mat-option>
+          <ng-container *ngFor="let x of activeLevels">
+            <mat-option [value]="x.classLevelId">{{getClassLevelName(x.educationLevel)}}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <mat-table [dataSource]="listData" matSort>
+        <ng-container matColumnDef="subjectName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Subject Name</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.subjectName}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="subjectCode">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Subject Code</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.subjectCode}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="classLevelId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Level</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{getClassLevelName(element.classLevelId)}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="subjectScope">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Scope</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{getSubjectScopeName(element.subjectScope)}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="subjectGroup">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Group</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{getSubjectGroupName(element.subjectGroup)}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="subjectType">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{getSubjectTypeName(element.subjectType)}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button [routerLink]="['/subject-edit', element.subjectId]"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button color="warn" (click)="confirmDelete(element)"><mat-icon>delete</mat-icon></button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

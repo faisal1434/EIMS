@@ -1,0 +1,81 @@
+<div class="card-wrapper">
+  <mat-card class="subject-card">
+    <mat-card-header class="class-card-header">
+      <mat-card-title class="class-card-title">
+        Edit subject
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="subject-card-content">
+      <div class="back-bar">
+        <a mat-mini-fab [routerLink]="['/subjects']" color="warn" style="position:relative;top:18px"><mat-icon>keyboard_backspace</mat-icon></a>
+      </div>
+      <form class="form-container" [formGroup]="subjectForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="input-f-w">
+          <mat-label>Subject Name</mat-label>
+          <input matInput formControlName="subjectName">
+
+          <mat-error *ngIf="f.subjectName.touched && f.subjectName.hasError('required')">Subject name required.</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Subject Code</mat-label>
+          <input matInput formControlName="subjectCode">
+
+          <mat-error *ngIf="f.subjectCode.touched && f.subjectCode.hasError('required')">Subject code required.</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Class Level</mat-label>
+          <mat-select formControlName="classLevelId" required (selectionChange)="onClassLevelChange($event.value)">
+            <mat-option [value]="null"></mat-option>
+            <ng-container *ngFor="let x of activeLevels">
+              <mat-option [value]="x.classLevelId">{{getClassLevelName(x.educationLevel)}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="f.classLevelId.touched && f.classLevelId.errors">Class Level required.</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Subject scope</mat-label>
+          <mat-select formControlName="subjectScope" required>
+            <mat-option [value]="null"></mat-option>
+            <ng-container *ngFor="let x of subjectScopeOptions">
+              <mat-option [value]="x.value" [disabled]="getScopeDisable(x.value)">{{x.name}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="f.subjectScope.touched && f.subjectScope.errors">Class level required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Subject Group</mat-label>
+          <mat-select formControlName="subjectGroup" required>
+            <mat-option [value]="null"></mat-option>
+            <ng-container *ngFor="let x of subjectGroupOptions">
+              <mat-option [value]="x.value">{{x.name}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="f.subjectGroup.touched && f.subjectGroup.errors">Subject group required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Subject Type</mat-label>
+          <mat-select formControlName="subjectType" required>
+            <mat-option [value]="null"></mat-option>
+            <ng-container *ngFor="let x of subjectTypeOptions">
+              <mat-option [value]="x.value">{{x.name}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="f.subjectType.touched && f.subjectType.errors">Subject Type required</mat-error>
+
+        </mat-form-field>
+        <div class="input-f-w">
+          <mat-spinner-button [options]="spinnerButtonOptions" type="submit">
+          </mat-spinner-button>
+        </div>
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>

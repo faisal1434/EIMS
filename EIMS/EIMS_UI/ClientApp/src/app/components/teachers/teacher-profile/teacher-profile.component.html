@@ -1,0 +1,90 @@
+<div class="card-wrapper">
+  <div class="mat-elevation-z3" style="margin-bottom:3px;">
+    <div class="data-loading-shade"
+         *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+  </div>
+  <mat-card class="profile-card">
+    <mat-card-header class="profile-card-header">
+      <mat-card-title class="profile-card-title">
+        Tecaher profile
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="profile-card-content" *ngIf="teacher">
+      <div class="back-bar">
+        <a mat-mini-fab [routerLink]="['/teachers']" color="warn" style="position:relative;top:18px"><mat-icon>keyboard_backspace</mat-icon></a>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="top-box">
+        <div class="img-box">
+          <img *ngIf="teacher" [src]="apiBaseUrl+'/'+teacher.picture" class="row-image mat-elevation-z8" width="150" />
+        </div>
+        <div class="title-box">
+
+          <h2 class="mat-title">{{teacher?.employeeName}}</h2>
+          <div class="mat-subheading-2">{{getDesignationName(teacher.designationId)}}</div>
+          <div class="mat-caption">
+            <span>
+              {{getClassLevelName(teacher.classLevel)}}, {{getSubjectGroupName(teacher.subjectGroup)}}
+            </span>
+
+          </div>
+          <div style="display:flex; align-items:center; align-content:center">
+            <span class="spacer"></span>
+            <mat-icon>phone</mat-icon><span> {{teacher.phone}}</span>
+          </div>
+          <div style="display:flex; align-items:center; align-content:center">
+            <span class="spacer"></span>
+            
+            <mat-icon>email</mat-icon><span style="border-left:solid 1px #eee"> {{teacher.email}}</span>
+          </div>
+        </div>
+      </div>
+      <h2 class="mat-title" style="padding-left:25px;">Address infomation</h2>
+      <mat-divider></mat-divider>
+      <div class="address-box">
+
+        <div class="lebel-box">Present Address</div>
+        <div class="text-box">{{teacher.presentAddress}}</div>
+      </div>
+      <div class="address-box">
+
+        <div class="lebel-box">Permanent Address</div>
+        <div class="text-box">{{teacher.permanentAddress}}</div>
+      </div>
+      <h2 class="mat-title" style="padding-left:25px;margin-top:25px;">Educational Background</h2>
+      <mat-divider></mat-divider>
+      <div style="padding-left:25px;padding-right:25px">
+        <mat-table [dataSource]="listData">
+
+          <ng-container matColumnDef="completionYear">
+            <mat-header-cell *matHeaderCellDef>Year</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{element.completionYear}}
+
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="degree">
+            <mat-header-cell *matHeaderCellDef>Degree</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.degree}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="instituteName">
+
+            <mat-header-cell *matHeaderCellDef>From</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.instituteName}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="result">
+
+            <mat-header-cell *matHeaderCellDef>Result</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.result}}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        </mat-table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,76 @@
+<div class="main-container">
+  <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport 
+                 [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'">
+      <div class="user-view">
+        <mat-toolbar>
+          <a mat-icon-button class="circle-logo">
+            <img src="../../assets/graduated_1.svg" width="45" />
+          </a>
+          Menu
+          <span class="spacer"></span>
+          <a mat-icon-button [routerLink]="['/settings']"><mat-icon>settings</mat-icon></a>
+        </mat-toolbar>
+      </div>
+      <ng-material-multilevel-menu [configuration]='config' [items]='navItems' (selectedItem)="drawer.toggle();selectedItem($event)">
+      </ng-material-multilevel-menu>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary" class="mat-primary mat-elevation-z8">
+        <mat-toolbar-row>
+          <button type="button"
+                  aria-label="Toggle sidenav"
+                  mat-icon-button
+                  (click)="drawer.toggle()">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+          <a class="circle-logo"> <img src="../assets/graduated_1.svg" width="55" /></a>
+          <span>EIMS</span>
+          <div class="spacer"></div>
+          <button mat-button [routerLink]="['/home']">Home</button>
+          <button mat-button *ngIf="isLogged">{{username}}</button>
+          <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" xPosition="before">
+            <button *ngIf="!isLogged" [routerLink]="['/login']" mat-menu-item>Login</button>
+            <button *ngIf="isLogged" (click)="doLogout()" mat-menu-item>Logout</button>
+          </mat-menu>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <!-- Add Content Here -->
+      <div class="content">
+        
+        <router-outlet></router-outlet>
+        
+      </div>
+      <mat-divider></mat-divider>
+      <div class="footer">
+        <div class="footer-left">
+          &copy; 2019 EIMS
+        </div>
+        <div class="footer-mid">
+
+          <a class="circle-link" href="https://docs.microsoft.com/en-us/dotnet/csharp/" target="_blank" rel="noopener">
+            <mat-icon><img src="../../assets/c-sharp-c-seeklogo.com.svg" width="25" /></mat-icon>
+          </a>
+          
+          <a class="circle-link" href="https://www.microsoft.com/en-us/sql-server/" target="_blank" rel="noopener">
+            <mat-icon><img src="../../assets/microsoft-sql-server-seeklogo.com.svg" width="25" /></mat-icon>
+          </a>
+          
+          <a class="circle-link" href="https://en.wikipedia.org/wiki/.NET_Core" target="_blank" rel="noopener">
+            <img src="../../assets/1200px-.NET_Core_Logo.svg.png" width="25" />
+          </a>
+         
+          <a class="circle-link" href="https://angular.io/" target="_blank" rel="noopener">
+            <mat-icon><img src="../../assets/angular-seeklogo.com.svg" width="25" /></mat-icon>
+          </a>
+        </div>
+        <div class="footer-right">
+          ESAD-CS/ACSL-M/39/01
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

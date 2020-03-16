@@ -1,0 +1,50 @@
+<div class="card-wrapper">
+  <div class="mat-elevation-z3" style="margin-bottom:3px;">
+    <div class="holidays-loading-shade"
+         *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+  </div>
+  <mat-card class="class-card">
+    <mat-card-header class="class-card-header">
+      <mat-card-title class="class-card-title">
+        Class list [{{currentSession?.sessionName}} session]
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="class-card-content">
+      <div class="add-bar">
+        <button mat-mini-fab style="position:relative;top:18px;" color="warn" [routerLink]="['/academic-class-create']"><mat-icon>add</mat-icon></button>
+      </div>
+      <mat-divider></mat-divider>
+      <mat-table [dataSource]="listClasses" matSort>
+        <ng-container matColumnDef="className">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Class Name</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.className}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="academicSessionId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Session</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{currentSession.sessionName}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="classLevelId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Level</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{getClassLevelName(element.classLevelId)}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="shiftId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Shift</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{getShiftTypeName(element.shiftId)}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button [routerLink]="['/academic-class-edit', element.academicClassId]"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button color="warn" (click)="confirmDelete(element)"><mat-icon>delete</mat-icon></button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

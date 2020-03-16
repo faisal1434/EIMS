@@ -1,0 +1,64 @@
+<div class="card-wrapper">
+  <mat-card class="class-card">
+    <mat-card-header class="class-card-header">
+      <mat-card-title class="class-card-title">
+        Add new class
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="class-card-content">
+      <div class="back-bar">
+        <a mat-mini-fab [routerLink]="['/academic-class']" color="warn" style="position:relative;top:18px"><mat-icon>keyboard_backspace</mat-icon></a>
+      </div>
+      <form class="form-container" [formGroup]="classForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="input-f-w">
+          <mat-label>Class Name</mat-label>
+          <input matInput formControlName="className">
+
+          <mat-error *ngIf="f.className.touched && f.className.hasError('required')">class no required.</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Session</mat-label>
+          <mat-select formControlName="academicSessionId" required>
+            <mat-option [value]="null"></mat-option>
+            <ng-container *ngFor="let x of academicSessionOptions">
+              <mat-option [value]="x.academicSessionId">{{x.sessionName}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="f.academicSessionId.touched && f.academicSessionId.errors">Session Type required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Level</mat-label>
+          <mat-select formControlName="classLevelId" required>
+            <mat-option [value]="null"></mat-option>
+            <ng-container *ngFor="let x of classLevels">
+              <mat-option [value]="x.classLevelId">{{getEducationLevelName(x.educationLevel)}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="f.classLevelId.touched && f.classLevelId.errors">Class level required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="input-f-w">
+          <mat-label>Shift</mat-label>
+          <mat-select formControlName="shiftId" required>
+            <mat-option [value]="null"></mat-option>
+            <ng-container *ngFor="let x of shifts">
+              <mat-option [value]="x.shiftId">{{getShiftTypeName(x.shiftType)}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="f.shiftId.touched && f.shiftId.errors">Shift  required</mat-error>
+
+        </mat-form-field>
+        <div class="input-f-w">
+          <mat-spinner-button [options]="spinnerButtonOptions" type="submit">
+
+          </mat-spinner-button>
+        </div>
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>

@@ -1,0 +1,39 @@
+.card-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 15px;
+}
+
+.institute-card {
+  width: 50%;
+  padding: 10px;
+  min-width: 300px;
+}
+
+.institute-card-title {
+  padding-left: 15px;
+}
+
+.institute-card-content {
+  width: 100%;
+}
+  .institute-card-content > div > a.mat-mini-fab{
+     position:relative;
+     left:-30px;
+  }
+  .input-f-w {
+    padding: 10px 15px;
+    width: calc(100% - 30px);
+  }
+@media(max-width:800px) {
+  .institute-card {
+    width: calc(100% - 30px);
+    padding: 10px;
+    min-width: 300px;
+  }
+  .institute-card-content > div > a.mat-mini-fab {
+    position: relative;
+    left: 0px;
+  }
+}

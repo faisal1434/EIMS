@@ -1,0 +1,5 @@
+npm install --save mat-progress-buttons
+npm install -save @angular/flex-layout
+npm install --save ngx-material-timepicker
+npm install --save ng-material-multilevel-menu
+npm install --save @fullcalendar/angular @fullcalendar/core @fullcalendar/daygrid

@@ -1,0 +1,36 @@
+.wrapper {
+  display: flex;
+  margin: 32px auto;
+  padding: 0 16px;
+  /*max-width: 960px;*/
+  flex-direction: column;
+  align-items: center;
+}
+.period-card {
+  width: 100%;
+  padding: 20px 10px;
+  margin-top: 15px;
+}
+.period-card-content{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+.period-table {
+  
+  width: calc(100% - 30px);
+}
+.period-table tr {
+  
+}
+  .period-table td {
+    padding: 16px 8px;
+    border-bottom: solid 1px #eee;
+    text-align:center;
+  }
+.generate-bar {
+  display: flex;
+  justify-content: flex-end;
+  width: calc(100% - 30px);
+}

@@ -1,0 +1,53 @@
+<div class="card-wrapper">
+  <div class="mat-elevation-z3" style="margin-bottom:3px;">
+    <div class="data-loading-shade"
+         *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+  </div>
+  <mat-card class="holiday-card">
+    <mat-card-header class="holiday-card-header">
+      <mat-card-title class="holiday-card-title">
+        Subjects
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="class-card-content">
+      <div class="add-bar">
+        <button mat-mini-fab style="position:relative;top:18px;" color="warn" [routerLink]="['/holiday-create']"><mat-icon>add</mat-icon></button>
+      </div>
+      <mat-divider></mat-divider>
+
+      <mat-table [dataSource]="listData" matSort>
+        <ng-container matColumnDef="holidayDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Date From</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.holidayDate | date:'yyyy-MM-dd'}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="upto">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>To</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.holidayType != 5 ? '-' : element.upto | date:'yyyy-MM-dd'}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="holidayType">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Holoday Type</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{getName(element.holidayType)}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> Manipulate </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button [routerLink]="['/holiday-edit', element.holidayId]"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button color="warn" (click)="confirmDelete(element)"><mat-icon>delete</mat-icon></button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>
